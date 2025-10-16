@@ -27,7 +27,7 @@ jobs:
       - name: Build MSI
         run: |
           wix build Installer/Product.wxs `
-            -dMyApp.TargetDir=output `
+            --bind "MyApp.TargetDir=output" `
             -o Installer/MyAppSetup.msi
 
       - name: Upload MSI Artifact
