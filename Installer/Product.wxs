@@ -16,13 +16,17 @@
   </Package>
 
   <Fragment>
+    <!-- Component inside DirectoryRef -->
     <DirectoryRef Id="INSTALLFOLDER">
-      <ComponentGroup Id="MainComponents">
-        <Component Id="ReadmeComponent" Guid="12345678-1234-1234-1234-123456789ABC">
-          <File Source="README.md" />
-        </Component>
-      </ComponentGroup>
+      <Component Id="ReadmeComponent" Guid="12345678-1234-1234-1234-123456789ABC">
+        <File Source="README.md" />
+      </Component>
     </DirectoryRef>
+
+    <!-- ComponentGroup at root level -->
+    <ComponentGroup Id="MainComponents">
+      <ComponentRef Id="ReadmeComponent" />
+    </ComponentGroup>
   </Fragment>
 
 </Wix>
