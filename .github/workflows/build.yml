@@ -1,0 +1,37 @@
+name: Build and Package MSI
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:  # allows manual trigger
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Restore and Build App
+        run: dotnet publish MyApp/MyApp.csproj -c Release -o output
+
+      - name: Install WiX Toolset v5
+        run: dotnet tool install --global wix --version 5.*
+
+      - name: Build MSI
+        run: |
+          wix build Installer/Product.wxs `
+            -dMyApp.TargetDir=output `
+            -o Installer/MyAppSetup.msi
+
+      - name: Upload MSI Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: MyAppSetup
+          path: Installer/MyAppSetup.msi
