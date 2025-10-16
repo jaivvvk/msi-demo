@@ -6,9 +6,7 @@
            UpgradeCode="12345678-1234-1234-1234-123456789abc">
 
     <StandardDirectory Id="ProgramFilesFolder">
-      <Directory Id="INSTALLFOLDER" Name="MyApp">
-        <File Source="README.md" />
-      </Directory>
+      <Directory Id="INSTALLFOLDER" Name="MyApp" />
     </StandardDirectory>
 
     <Feature Id="MainFeature" Title="MyApp Feature" Level="1">
@@ -17,13 +15,14 @@
 
   </Package>
 
-  <!-- ComponentGroup must be inside a Fragment in WiX 5 -->
   <Fragment>
-    <ComponentGroup Id="MainComponents">
-      <Component Id="ReadmeComponent" Guid="12345678-1234-1234-1234-123456789ABC">
-        <File Source="README.md" />
-      </Component>
-    </ComponentGroup>
+    <DirectoryRef Id="INSTALLFOLDER">
+      <ComponentGroup Id="MainComponents">
+        <Component Id="ReadmeComponent" Guid="12345678-1234-1234-1234-123456789ABC">
+          <File Source="README.md" />
+        </Component>
+      </ComponentGroup>
+    </DirectoryRef>
   </Fragment>
 
 </Wix>
